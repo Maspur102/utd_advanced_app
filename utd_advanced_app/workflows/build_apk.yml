@@ -1,0 +1,47 @@
+name: Build Flutter APK
+
+# Kapan aksi ini dijalankan?
+on:
+  push:
+    branches:
+      - main # Otomatis build setiap ada commit baru ke branch main
+  workflow_dispatch: # Menambahkan tombol manual agar bisa di-build kapan saja dari Web
+
+jobs:
+  build:
+    name: Build APK Release
+    runs-on: ubuntu-latest # Menggunakan server Linux gratis dari GitHub
+
+    steps:
+      # 1. Mengambil kode Anda dari repositori
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Menyiapkan Java (Dibutuhkan oleh Android Gradle)
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17' # Wajib Java 17 untuk standar Android/Flutter terbaru
+
+      # 3. Menyiapkan environment Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable' # Menggunakan versi stabil terbaru
+
+      # 4. Mengunduh semua package (dio, bloc, go_router, dll)
+      - name: Install dependencies
+        run: flutter pub get
+
+      # 5. Proses utama: Membangun APK
+      - name: Build APK
+        run: flutter build apk --release
+
+      # 6. Mengunggah hasil APK agar bisa Anda download
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: UTD-Store-App
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7 # File APK akan disimpan di server GitHub selama 7 hari
