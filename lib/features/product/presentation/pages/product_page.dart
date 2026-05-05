@@ -18,7 +18,7 @@ class ProductPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.bookmark),
-            onPressed: () => context.push('/bookmark'), // Tombol ke halaman Bookmark
+            onPressed: () => context.push('/bookmark'),
           )
         ],
       ),
@@ -51,11 +51,9 @@ class ProductPage extends StatelessWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.favorite_border),
                       onPressed: () {
-                        // LOGIKA ANTI AI: Mencatat waktu secara presisi saat tombol ditekan
                         final now = DateTime.now();
                         final timeString = "Disimpan pada ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
                         
-                        // Menyimpan ke Isar Database
                         final bookmark = Bookmark()
                           ..productId = item.id
                           ..productName = item.name
@@ -76,6 +74,13 @@ class ProductPage extends StatelessWidget {
           }
           return const SizedBox.shrink();
         },
+      ),
+      // TOMBOL MENUJU HALAMAN CRYPTO
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push('/crypto'),
+        icon: const Icon(Icons.show_chart),
+        label: const Text('Live Crypto'),
+        backgroundColor: Colors.orange,
       ),
     );
   }

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/product/presentation/pages/product_page.dart';
 import '../../features/product/presentation/cubit/product_cubit.dart';
-import '../../features/bookmark/presentation/pages/bookmark_page.dart'; // Import baru
+import '../../features/bookmark/presentation/pages/bookmark_page.dart';
+import '../../features/crypto/presentation/pages/crypto_page.dart'; // Import Baru
 import '../di/injection.dart';
 
 class AppRouter {
@@ -26,6 +27,10 @@ class AppRouter {
       GoRoute(
         path: '/bookmark',
         builder: (context, state) => const BookmarkPage(),
+      ),
+      GoRoute(
+        path: '/crypto',
+        builder: (context, state) => const CryptoPage(),
       ),
     ],
   );
