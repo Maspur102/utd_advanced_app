@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../cubit/product_cubit.dart';
 import '../cubit/product_state.dart';
+import '../../../../core/di/injection.dart';
+import '../../../bookmark/data/isar_service.dart';
+import '../../../bookmark/domain/bookmark_model.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -9,7 +13,15 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Katalog Produk UTD')),
+      appBar: AppBar(
+        title: const Text('Katalog Produk UTD'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.bookmark),
+            onPressed: () => context.push('/bookmark'), // Tombol ke halaman Bookmark
+          )
+        ],
+      ),
       body: BlocBuilder<ProductCubit, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {
@@ -39,9 +51,21 @@ class ProductPage extends StatelessWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.favorite_border),
                       onPressed: () {
-                        // Fitur bookmark untuk Tahap 3
+                        // LOGIKA ANTI AI: Mencatat waktu secara presisi saat tombol ditekan
+                        final now = DateTime.now();
+                        final timeString = "Disimpan pada ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+                        
+                        // Menyimpan ke Isar Database
+                        final bookmark = Bookmark()
+                          ..productId = item.id
+                          ..productName = item.name
+                          ..productImage = item.image
+                          ..timestamp = timeString;
+                          
+                        locator<IsarService>().saveBookmark(bookmark);
+
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Fitur Bookmark menyusul!')),
+                          SnackBar(content: Text('Tersimpan! $timeString')),
                         );
                       },
                     ),

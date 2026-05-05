@@ -1,9 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // Tambahkan ini
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/product/presentation/pages/product_page.dart';
-import '../../features/product/presentation/cubit/product_cubit.dart'; // Tambahkan ini
-import '../di/injection.dart'; // Tambahkan ini
+import '../../features/product/presentation/cubit/product_cubit.dart';
+import '../../features/bookmark/presentation/pages/bookmark_page.dart'; // Import baru
+import '../di/injection.dart';
 
 class AppRouter {
   static final router = GoRouter(
@@ -21,6 +22,10 @@ class AppRouter {
             child: const ProductPage(),
           );
         },
+      ),
+      GoRoute(
+        path: '/bookmark',
+        builder: (context, state) => const BookmarkPage(),
       ),
     ],
   );
