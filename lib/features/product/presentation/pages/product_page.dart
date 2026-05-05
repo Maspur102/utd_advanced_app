@@ -14,16 +14,69 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Katalog Produk UTD', style: TextStyle(fontWeight: FontWeight.bold)),
+        // Mematikan centerTitle agar posisi pindah ke sisi kiri
+        centerTitle: false,
+        titleSpacing: 20, // Jarak dari pinggir layar
+        toolbarHeight: 70, // Sedikit diperbesar agar lebih elegan
+        title: Row(
+          children: [
+            // Ikon toko bergaya modern dengan latar transparan
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.deepPurpleAccent.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.storefront, color: Colors.tealAccent, size: 24),
+            ),
+            const SizedBox(width: 12),
+            // Teks judul sesuai UTS (UTD Store [Nama Depan Anda])
+            RichText(
+              text: const TextSpan(
+                text: 'UTD Store ',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                  letterSpacing: 0.5,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'Purnama',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.tealAccent, // Memberikan warna berbeda pada nama Anda
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_cell, color: Colors.tealAccent),
-            onPressed: () => context.push('/native'),
+          // Membungkus ikon dengan lingkaran transparan agar terlihat seperti aplikasi iOS/modern
+          Container(
+            margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.05),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.settings_cell, color: Colors.tealAccent, size: 20),
+              onPressed: () => context.push('/native'),
+            ),
           ),
-          IconButton(
-            icon: const Icon(Icons.bookmark, color: Colors.deepPurpleAccent),
-            onPressed: () => context.push('/bookmark'),
-          )
+          Container(
+            margin: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.05),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.bookmark, color: Colors.deepPurpleAccent, size: 20),
+              onPressed: () => context.push('/bookmark'),
+            ),
+          ),
         ],
       ),
       body: BlocBuilder<ProductCubit, ProductState>(
@@ -37,7 +90,7 @@ class ProductPage extends StatelessWidget {
           } else if (state is ProductLoaded) {
             final products = state.products;
             return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 80), // Memberi jarak agar tidak tertutup FloatingActionButton
+              padding: const EdgeInsets.only(bottom: 80, top: 10), 
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final item = products[index];
@@ -48,7 +101,7 @@ class ProductPage extends StatelessWidget {
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
-                        color: Colors.white, // Latar putih agar gambar produk API terlihat jelas di tema gelap
+                        color: Colors.white, 
                         child: Image.network(
                           item.image,
                           width: 50,
@@ -71,11 +124,9 @@ class ProductPage extends StatelessWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.favorite_border, color: Colors.pinkAccent),
                       onPressed: () {
-                        // LOGIKA ANTI AI: Mencatat waktu secara presisi saat tombol ditekan
                         final now = DateTime.now();
                         final timeString = "Disimpan pada ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
                         
-                        // Menyimpan ke Isar Database
                         final bookmark = Bookmark()
                           ..productId = item.id
                           ..productName = item.name
