@@ -14,53 +14,41 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Mematikan centerTitle agar posisi pindah ke sisi kiri
         centerTitle: false,
-        titleSpacing: 20, // Jarak dari pinggir layar
-        toolbarHeight: 70, // Sedikit diperbesar agar lebih elegan
+        titleSpacing: 20,
+        toolbarHeight: 70,
         title: Row(
           children: [
-            // Ikon toko bergaya modern dengan latar transparan
             Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.deepPurpleAccent.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12),
-              ),
+              decoration: BoxDecoration(color: Colors.deepPurpleAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(12)),
               child: const Icon(Icons.storefront, color: Colors.tealAccent, size: 24),
             ),
             const SizedBox(width: 12),
-            // Teks judul sesuai UTS (UTD Store [Nama Depan Anda])
             RichText(
               text: const TextSpan(
                 text: 'UTD Store ',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  letterSpacing: 0.5,
-                ),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: 0.5),
                 children: [
-                  TextSpan(
-                    text: 'Purnama',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      color: Colors.tealAccent, // Memberikan warna berbeda pada nama Anda
-                    ),
-                  ),
+                  TextSpan(text: 'Purnama', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.tealAccent)),
                 ],
               ),
             ),
           ],
         ),
         actions: [
-          // Membungkus ikon dengan lingkaran transparan agar terlihat seperti aplikasi iOS/modern
+          // IKON PROFIL BARU
           Container(
             margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              shape: BoxShape.circle,
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
+            child: IconButton(
+              icon: const Icon(Icons.person, color: Colors.orangeAccent, size: 20),
+              onPressed: () => context.push('/profile'), // MENUJU HALAMAN PROFIL
             ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
             child: IconButton(
               icon: const Icon(Icons.settings_cell, color: Colors.tealAccent, size: 20),
               onPressed: () => context.push('/native'),
@@ -68,10 +56,7 @@ class ProductPage extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.05),
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
             child: IconButton(
               icon: const Icon(Icons.bookmark, color: Colors.deepPurpleAccent, size: 20),
               onPressed: () => context.push('/bookmark'),
@@ -84,9 +69,7 @@ class ProductPage extends StatelessWidget {
           if (state is ProductLoading) {
             return const Center(child: CircularProgressIndicator(color: Colors.deepPurpleAccent));
           } else if (state is ProductError) {
-            return Center(
-              child: Text(state.message, style: const TextStyle(color: Colors.redAccent, fontSize: 16)),
-            );
+            return Center(child: Text(state.message, style: const TextStyle(color: Colors.redAccent, fontSize: 16)));
           } else if (state is ProductLoaded) {
             final products = state.products;
             return ListView.builder(
@@ -97,26 +80,20 @@ class ProductPage extends StatelessWidget {
                 return Card(
                   margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ListTile(
+                    // NAVIGASI KLIK KE DETAIL PRODUK
+                    onTap: () => context.push('/detail', extra: item), 
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Container(
                         color: Colors.white, 
                         child: Image.network(
-                          item.image,
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.contain,
+                          item.image, width: 50, height: 50, fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image, color: Colors.grey),
                         ),
                       ),
                     ),
-                    title: Text(
-                      item.name, 
-                      maxLines: 2, 
-                      overflow: TextOverflow.ellipsis, 
-                      style: const TextStyle(fontWeight: FontWeight.bold)
-                    ),
+                    title: Text(item.name, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 4.0),
                       child: Text('ID: ${item.id}', style: const TextStyle(color: Colors.white54)),
@@ -126,15 +103,8 @@ class ProductPage extends StatelessWidget {
                       onPressed: () {
                         final now = DateTime.now();
                         final timeString = "Disimpan pada ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-                        
-                        final bookmark = Bookmark()
-                          ..productId = item.id
-                          ..productName = item.name
-                          ..productImage = item.image
-                          ..timestamp = timeString;
-                          
+                        final bookmark = Bookmark()..productId = item.id..productName = item.name..productImage = item.image..timestamp = timeString;
                         locator<IsarService>().saveBookmark(bookmark);
-
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Tersimpan! $timeString', style: const TextStyle(fontWeight: FontWeight.bold)),
