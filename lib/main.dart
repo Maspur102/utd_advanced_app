@@ -34,7 +34,8 @@ class MainApp extends StatelessWidget {
           foregroundColor: Colors.white,
           surfaceTintColor: Colors.transparent,
         ),
-        cardTheme: CardTheme(
+        // PERBAIKAN: Menggunakan CardThemeData (khusus untuk versi Flutter terbaru)
+        cardTheme: CardThemeData(
           elevation: 4,
           shadowColor: Colors.deepPurpleAccent.withOpacity(0.2),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
