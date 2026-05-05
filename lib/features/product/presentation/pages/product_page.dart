@@ -16,36 +16,55 @@ class ProductPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         titleSpacing: 20,
-        toolbarHeight: 70,
+        toolbarHeight: 75, // Ditinggikan sedikit agar teks atas-bawah muat
         title: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.deepPurpleAccent.withOpacity(0.2), borderRadius: BorderRadius.circular(12)),
-              child: const Icon(Icons.storefront, color: Colors.tealAccent, size: 24),
+              decoration: BoxDecoration(
+                color: Colors.deepPurpleAccent.withOpacity(0.2), 
+                borderRadius: BorderRadius.circular(12)
+              ),
+              child: const Icon(Icons.storefront, color: Colors.tealAccent, size: 28),
             ),
             const SizedBox(width: 12),
-            RichText(
-              text: const TextSpan(
-                text: 'UTD Store ',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: 0.5),
-                children: [
-                  TextSpan(text: 'Purnama', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.tealAccent)),
-                ],
-              ),
+            // TEKS TERSUSUN KE BAWAH (VERTIKAL)
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'UTD Store',
+                  style: TextStyle(
+                    fontSize: 22, 
+                    fontWeight: FontWeight.w900, 
+                    color: Colors.white, 
+                    letterSpacing: 0.5
+                  ),
+                ),
+                Text(
+                  'Purnama', 
+                  style: TextStyle(
+                    fontSize: 16, 
+                    fontWeight: FontWeight.w400, 
+                    color: Colors.tealAccent
+                  ),
+                ),
+              ],
             ),
           ],
         ),
         actions: [
-          // IKON PROFIL BARU
+          // IKON PROFIL
           Container(
             margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
             decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
             child: IconButton(
               icon: const Icon(Icons.person, color: Colors.orangeAccent, size: 20),
-              onPressed: () => context.push('/profile'), // MENUJU HALAMAN PROFIL
+              onPressed: () => context.push('/profile'),
             ),
           ),
+          // IKON NATIVE
           Container(
             margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
             decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
@@ -54,6 +73,7 @@ class ProductPage extends StatelessWidget {
               onPressed: () => context.push('/native'),
             ),
           ),
+          // IKON BOOKMARK
           Container(
             margin: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
             decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
@@ -101,6 +121,7 @@ class ProductPage extends StatelessWidget {
                     trailing: IconButton(
                       icon: const Icon(Icons.favorite_border, color: Colors.pinkAccent),
                       onPressed: () {
+                        // LOGIKA ANTI-AI TIMESTAMP
                         final now = DateTime.now();
                         final timeString = "Disimpan pada ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
                         final bookmark = Bookmark()..productId = item.id..productName = item.name..productImage = item.image..timestamp = timeString;
