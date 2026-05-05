@@ -33,16 +33,18 @@ class ProfilePage extends StatelessWidget {
               'NIM: 20123011',
               style: TextStyle(fontSize: 18, color: Colors.white.withOpacity(0.7)),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
+            // Mengganti "Kelompok" dengan identitas prodi yang lebih profesional
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.tealAccent.withOpacity(0.2),
+                color: Colors.deepPurpleAccent.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.deepPurpleAccent),
               ),
               child: const Text(
-                'Kelompok 9',
-                style: TextStyle(fontSize: 16, color: Colors.tealAccent, fontWeight: FontWeight.bold),
+                'Mahasiswa S1 Informatika',
+                style: TextStyle(fontSize: 14, color: Colors.tealAccent, fontWeight: FontWeight.bold),
               ),
             ),
           ],
