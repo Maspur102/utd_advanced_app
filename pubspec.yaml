@@ -45,6 +45,9 @@ dependencies:
   path_provider: ^2.1.5
   web_socket_channel: ^3.0.3
   fl_chart: ^1.1.0
+  workmanager: ^0.7.0
+  shared_preferences: ^2.5.3
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

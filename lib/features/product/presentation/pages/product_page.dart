@@ -34,26 +34,25 @@ class ProductPage extends StatelessWidget {
               children: [
                 Text(
                   'UTD Store',
-                  style: TextStyle(
-                    fontSize: 22, 
-                    fontWeight: FontWeight.w900, 
-                    color: Colors.white, 
-                    letterSpacing: 0.5
-                  ),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: 0.5),
                 ),
                 Text(
-                  'Purnama', 
-                  style: TextStyle(
-                    fontSize: 16, 
-                    fontWeight: FontWeight.w400, 
-                    color: Colors.tealAccent
-                  ),
+                  'Rifky', // Identitas diperbarui
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.tealAccent),
                 ),
               ],
             ),
           ],
         ),
         actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
+            child: IconButton(
+              icon: const Icon(Icons.cloud_sync, color: Colors.cyanAccent, size: 20),
+              onPressed: () => context.push('/sync'),
+            ),
+          ),
           Container(
             margin: const EdgeInsets.only(right: 8, top: 12, bottom: 12),
             decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), shape: BoxShape.circle),
@@ -88,15 +87,13 @@ class ProductPage extends StatelessWidget {
             return Center(child: Text(state.message, style: const TextStyle(color: Colors.redAccent, fontSize: 16)));
           } else if (state is ProductLoaded) {
             final products = state.products;
-            
-            // MENGGUNAKAN GRIDVIEW AGAR TAMPILAN JADI KOTAK BERJEJER
             return GridView.builder(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Menampilkan 2 kotak per baris
+                crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                childAspectRatio: 0.75, // Mengatur rasio tinggi kotak
+                childAspectRatio: 0.75,
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
@@ -108,7 +105,6 @@ class ProductPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // BAGIAN GAMBAR
                         Expanded(
                           child: Stack(
                             children: [
@@ -116,10 +112,7 @@ class ProductPage extends StatelessWidget {
                                 width: double.infinity,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  ),
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                                 ),
                                 padding: const EdgeInsets.all(12),
                                 child: Image.network(
@@ -128,7 +121,6 @@ class ProductPage extends StatelessWidget {
                                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image, color: Colors.grey),
                                 ),
                               ),
-                              // TOMBOL FAVORITE DI DALAM KOTAK
                               Positioned(
                                 top: 8,
                                 right: 8,
@@ -158,23 +150,14 @@ class ProductPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // BAGIAN TEKS INFORMASI
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                item.name,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                              ),
+                              Text(item.name, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                               const SizedBox(height: 4),
-                              Text(
-                                'ID: ${item.id}',
-                                style: const TextStyle(color: Colors.tealAccent, fontSize: 12, fontWeight: FontWeight.w600),
-                              ),
+                              Text('ID: ${item.id}', style: const TextStyle(color: Colors.tealAccent, fontSize: 12, fontWeight: FontWeight.w600)),
                             ],
                           ),
                         ),

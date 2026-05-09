@@ -25,16 +25,15 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             const Text(
-              'Purnama Raharja',
+              'Rifky Raihan', // Identitas diperbarui
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 8),
             Text(
-              'NIM: 20123011',
+              'NPM: 20123021', // Identitas diperbarui
               style: TextStyle(fontSize: 18, color: Colors.white.withOpacity(0.7)),
             ),
             const SizedBox(height: 16),
-            // Mengganti "Kelompok" dengan identitas prodi yang lebih profesional
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
