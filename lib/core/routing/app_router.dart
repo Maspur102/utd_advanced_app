@@ -1,4 +1,4 @@
-import 'package:go_router/package:go_router.dart';
+import 'package:go_router/go_router.dart'; // Baris ini sudah diperbaiki
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/product/presentation/pages/product_page.dart';
@@ -10,7 +10,7 @@ import '../../features/crypto/presentation/pages/crypto_page.dart';
 import '../../features/native/presentation/pages/native_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/sync/presentation/pages/background_sync_page.dart';
-import '../di/injection.dart'; // Import yang sebelumnya tertinggal
+import '../di/injection.dart'; 
 
 class AppRouter {
   static final router = GoRouter(
