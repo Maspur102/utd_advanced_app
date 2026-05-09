@@ -26,7 +26,6 @@ class _BackgroundSyncPageState extends State<BackgroundSyncPage> {
     });
   }
 
-  // POST-TEST 2: Constraint Eksplorasi (Harus di-cas)
   void _mulaiSinkronisasiRutin() {
     Workmanager().registerPeriodicTask(
       "unique_id_sync_01",
@@ -34,7 +33,7 @@ class _BackgroundSyncPageState extends State<BackgroundSyncPage> {
       frequency: const Duration(minutes: 15),
       constraints: Constraints(
         networkType: NetworkType.connected,
-        requiresCharging: true, // Jawaban Post-Test 2: Hanya jalan saat di-cas
+        requiresCharging: true, 
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(
@@ -42,12 +41,11 @@ class _BackgroundSyncPageState extends State<BackgroundSyncPage> {
     );
   }
 
-  // POST-TEST 1: Eksperimen One-Off Task 10 Detik
   void _sinkronisasiSekaliJalan10Detik() {
     Workmanager().registerOneOffTask(
       "unique_id_sync_02",
       syncTask,
-      initialDelay: const Duration(seconds: 10), // Jawaban Post-Test 1
+      initialDelay: const Duration(seconds: 10), 
     );
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("One-Off Task Aktif! Silakan tutup aplikasi sekarang (Swipe up) dan tunggu 10 detik.")),
@@ -71,7 +69,7 @@ class _BackgroundSyncPageState extends State<BackgroundSyncPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.sync_cloud, size: 80, color: Colors.tealAccent),
+              const Icon(Icons.cloud_sync, size: 80, color: Colors.tealAccent), // Perbaikan icon di sini
               const SizedBox(height: 20),
               const Text("Terakhir Dikerjakan Oleh Latar Belakang:", style: TextStyle(fontSize: 14, color: Colors.white70)),
               const SizedBox(height: 8),
